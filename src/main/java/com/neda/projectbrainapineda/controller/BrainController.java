@@ -1,7 +1,9 @@
 package com.neda.projectbrainapineda.controller;
 
 import com.neda.projectbrainapineda.form.BrainForm;
+import com.neda.projectbrainapineda.form.BrainResponseForm;
 import com.neda.projectbrainapineda.form.FollowForm;
+import com.neda.projectbrainapineda.form.IdeaResponseForm;
 import com.neda.projectbrainapineda.form.LoginForm;
 import com.neda.projectbrainapineda.form.UpdateForm;
 import com.neda.projectbrainapineda.model.Brain;
@@ -60,33 +62,42 @@ public class BrainController {
     }
 
     @GetMapping("/brain/{username}/all_ideas")
-    public Set<Idea> getIdeasForBrain(@PathVariable String username) {
+    public IdeaResponseForm getIdeasForBrain(@PathVariable String username) {
+        IdeaResponseForm responseForm = new IdeaResponseForm();
         try {
-            return brainRepository.findBrainByUsername(username).orElseThrow().getIdeas();
+            responseForm.setData(brainRepository.findBrainByUsername(username).orElseThrow().getIdeas());
         } catch (Exception e) {
             e.printStackTrace();
-            return new HashSet<Idea>();
+            responseForm.setData(new HashSet<Idea>());
         }
+        return responseForm;
     }
 
     @GetMapping("/brain/{username}/all_todos")
-    public Set<Idea> getTodosForBrain(@PathVariable String username) {
+    public IdeaResponseForm getTodosForBrain(@PathVariable String username) {
+        IdeaResponseForm responseForm = new IdeaResponseForm();
         try {
-            return brainRepository.findBrainByUsername(username).orElseThrow().getTodos();
+            responseForm.setData(brainRepository.findBrainByUsername(username).orElseThrow().getTodos());
         } catch (Exception e) {
             e.printStackTrace();
-            return new HashSet<Idea>();
+            responseForm.setData(new HashSet<Idea>());
         }
+        return responseForm;
     }
 
     @GetMapping("/brain/{username}/all_followers")
-    public Set<Brain> getFollowersForBrain(@PathVariable String username) {
+    public BrainResponseForm getFollowersForBrain(@PathVariable String username) {
+        BrainResponseForm responseForm = new BrainResponseForm();
+
         try {
-            return brainRepository.findBrainByUsername(username).orElseThrow().getFollowers();
+            responseForm.setData(brainRepository.findBrainByUsername(username).orElseThrow().getFollowers());
+
         } catch (Exception e) {
             e.printStackTrace();
-            return new HashSet<Brain>();
+            
+            responseForm.setData(new HashSet<Brain>());
         }
+        return responseForm;
     }
 
     @PostMapping("/brain/update_brain")

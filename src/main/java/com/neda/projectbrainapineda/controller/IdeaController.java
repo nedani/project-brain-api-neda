@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.neda.projectbrainapineda.form.IdeaForm;
+import com.neda.projectbrainapineda.form.IdeaResponseForm;
 import com.neda.projectbrainapineda.model.Idea;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 @RestController
 public class IdeaController {
@@ -21,8 +23,15 @@ public class IdeaController {
     }
 
     @GetMapping("/ideas")
-    public Collection<Idea> findAll() {
-        return ideaRepository.findAll();
+    public IdeaResponseForm findAll() {
+        IdeaResponseForm responseForm = new IdeaResponseForm();
+        try {
+            responseForm.setData(new HashSet<Idea>(ideaRepository.findAll()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            responseForm.setData(new HashSet<Idea>());
+        }
+        return responseForm;
     }
 
     @GetMapping("/idea")
@@ -49,6 +58,6 @@ public class IdeaController {
 
         ideaRepository.deleteById(id);
         
-        return "idea";
+        return "deleted";
     }
 }
