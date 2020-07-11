@@ -24,7 +24,7 @@ public class Brain {
     private String username;
 
     @Column(unique = false, nullable = true)
-    private String firstName;
+    private String firstname;
 
     @Column(unique = false, nullable = true)
     private String lastname;
@@ -34,6 +34,9 @@ public class Brain {
 
     @ManyToMany
     private Set<Brain> followers;
+
+    @OneToMany
+    private Set<Idea> todos;
 
     @OneToMany
     @JsonIgnore

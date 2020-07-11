@@ -30,12 +30,25 @@ public class IdeaController {
         return ideaRepository.findIdeaById(id).orElseThrow();
     }
 
-    @PostMapping("/ideas")
+    @PostMapping("/save_ideas")
     public Idea save(@RequestBody IdeaForm ideaForm) {
         Idea idea = new Idea();
         idea.setTitle(ideaForm.getTitle());
         idea.setContext(ideaForm.getContent());
         idea.setContent(ideaForm.getContent());
         return ideaRepository.save(idea);
+    }
+
+    @DeleteMapping("/idea/remove_idea")
+    public String removeOne(@RequestParam Long id) {
+        Idea idea = ideaRepository.findById(id).orElseThrow();
+        idea.getAuthor().getIdeas().remove(idea);
+        idea.setAuthor(null);
+
+        ideaRepository.save(idea);
+
+        ideaRepository.deleteById(id);
+        
+        return "idea";
     }
 }

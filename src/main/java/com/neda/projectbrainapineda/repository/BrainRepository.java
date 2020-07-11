@@ -12,5 +12,5 @@ import org.springframework.stereotype.Repository;
 public interface BrainRepository extends JpaRepository<Brain, Long> {
 
     Optional<Brain> findBrainByUsername(String username);
-    //Optional<Brain> findBrainByEmail(String email);
+    Optional<Brain> findBrainByEmailAndPassword(String email, String password);
 }

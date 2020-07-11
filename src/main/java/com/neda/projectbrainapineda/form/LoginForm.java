@@ -3,10 +3,7 @@ package com.neda.projectbrainapineda.form;
 import lombok.Data;
 
 @Data
-public class BrainForm {
+public class LoginForm {
     private String email;
-    private String username;
-    private String firstname;
-    private String lastname;
     private String password;
 }
