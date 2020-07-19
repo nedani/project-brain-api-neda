@@ -1,6 +1,5 @@
 package com.neda.projectbrainapineda.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -14,6 +13,9 @@ public class Idea {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(unique = false, nullable = true)
+    private String citeId;
 
     @Column(unique = false, nullable = false)
     private String title;
